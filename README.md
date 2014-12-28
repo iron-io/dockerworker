@@ -15,7 +15,7 @@ work, no iron_worker cli magic allowed. Then user can zip themselves and upload 
 
 ## Trying this out
 
-To run hello.rb example:
+To run hello.rb example, first:
 
 ```
 bundle install --standalone
@@ -23,15 +23,7 @@ bundle install --standalone
 
 I've already add this line to use the bundled gems: `require_relative 'vendor/bundle/bundler/setup'`
 
-Then run:
-
-```
-ruby run.rb --payload hello.payload.json --config hello.config.yml --stack ruby-2.1 ruby hello.rb
-```
-
-That will run hello.rb locally.
-
-Do we even need run.rb, user could just run docker directly like:
+Then run it: 
 
 ```
 docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:ruby-2.1 sh -c 'ruby hello.rb -payload hello.payload.json -config hello.config.yml -id 123'

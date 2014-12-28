@@ -19,3 +19,5 @@ doc/
 
 .idea/
 iron.json
+
+vendor/
