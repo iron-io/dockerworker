@@ -8,7 +8,8 @@ Use our docker stacks to dev and test locally with the exact same environment as
 
 ## The dev/test process for a user will be much cleaner
 
-1. Create a script. All dependencies must in the current directory or in sub-directories.
+1. Create a script. All dependencies must in the current directory or in sub-directories. This is the key thing. It may
+work normally, but when you run it in the docker container it doesn't. If it works in the container, then you're all good.
 2. Create input/payload example file (they should check this into source control)
 3. Run/test script with example file (see docker command below)
 4. Once it works, upload it and it should work no problem (assuming the input is the same format as the example).
@@ -21,12 +22,12 @@ To run hello.rb example, first:
 bundle install --standalone
 ```
 
-I've already add this line to use the bundled gems: `require_relative 'vendor/bundle/bundler/setup'`
+I've already add this line to use the bundled gems: `require_relative 'bundle/bundler/setup'`
 
 Then run it: 
 
 ```
-docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:ruby-2.1 sh -c 'ruby hello.rb -payload hello.payload.json -config hello.config.yml -id 123'
+docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:ruby-2.1 sh -c 'ruby hello.rb --payload hello.payload.json --config hello.config.yml --id 123'
 ```
 
 Then if it works, they can run the following to package:
