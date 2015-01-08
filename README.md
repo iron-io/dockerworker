@@ -8,10 +8,10 @@ Use our docker stacks to dev and test locally with the exact same environment as
 
 ## The dev/test process for a user will be much cleaner
 
-1) Create a script. All dependencies must in the current directory or in sub-directories. 
-2) Create input/payload example file (they should check this into source control)
-3) Run/test script with example file (see docker command below)
-4) Once it works, upload it and it should work no problem (assuming the input is the same format as the example).
+1. Create a script. All dependencies must in the current directory or in sub-directories.
+2. Create input/payload example file (they should check this into source control)
+3. Run/test script with example file (see docker command below)
+4. Once it works, upload it and it should work no problem (assuming the input is the same format as the example).
 
 ## Trying this out
 
