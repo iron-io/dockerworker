@@ -1,24 +1,17 @@
 hello_worker
 ============
 
-## TODO
-
-- Make an iron cli in Go, just for uploading (see below)
-- Change `file_name` in [upload](http://dev.iron.io/worker/reference/api/#upload_or_update_a_code_package) to `command` or something, so they can run whatever, such as `ruby hello.rb`
-- Maybe good time to change cli params from the single dash word like `-payload` to `--payload` or just `-p`
-
 ## What is this?
 
-Use our docker stacks to run exactly as it would when run remote. All dependencies must be locally in the current directory to
-work, no iron_worker cli magic allowed. Then user can zip themselves and upload (like Lambda). 
+Use our docker stacks to dev and test locally with the exact same environment as it has when when it runs remote. 
+
 
 ## The dev/test process for a user will be much cleaner
 
-1) Create script
+1) Create a script. All dependencies must in the current directory or in sub-directories. 
 2) Create input/payload example file (they should check this into source control)
 3) Run/test script with example file (see docker command below)
 4) Once it works, upload it and it should work no problem (assuming the input is the same format as the example).
-
 
 ## Trying this out
 
