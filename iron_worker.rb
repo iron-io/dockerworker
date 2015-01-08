@@ -14,13 +14,13 @@ module IronWorker
   def self.load
     return if @@loaded
     0.upto($*.length - 2) do |i|
-      @@args[:root] = $*[i + 1] if $*[i] == '-d'
-      @@args[:payload_file] = $*[i + 1] if $*[i] == '-payload'
-      @@args[:config_file] = $*[i + 1] if $*[i] == '-config'
-      @@args[:task_id] = $*[i + 1] if $*[i] == '-id'
+      @@args[:root] = $*[i + 1] if $*[i] == '--dir'
+      @@args[:payload_file] = $*[i + 1] if $*[i] == '--payload'
+      @@args[:config_file] = $*[i + 1] if $*[i] == '--config'
+      @@args[:task_id] = $*[i + 1] if $*[i] == '--id'
     end
 
-    puts "args: #{@@args.inspect}"
+    # puts "args: #{@@args.inspect}"
 
     if args[:payload_file]
       @@payload = File.read(@@args[:payload_file])
@@ -47,6 +47,7 @@ module IronWorker
         end
       end
     end
+    @@loaded = true
   end
 
   def self.payload

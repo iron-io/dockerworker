@@ -12,6 +12,13 @@ hello_worker
 Use our docker stacks to run exactly as it would when run remote. All dependencies must be locally in the current directory to
 work, no iron_worker cli magic allowed. Then user can zip themselves and upload (like Lambda). 
 
+## The dev/test process for a user will be much cleaner
+
+1) Create script
+2) Create input/payload example file (they should check this into source control)
+3) Run/test script with example file (see docker command below)
+4) Once it works, upload it and it should work no problem (assuming the input is the same format as the example).
+
 
 ## Trying this out
 
@@ -35,8 +42,17 @@ Then if it works, they can run the following to package:
 zip -r hello.zip .
 ```
 
-TODO: Then upload (maybe make a Go cli with upload as the first command. Make it one cli for all Iron products:
+Get the new Go based ironcli at https://github.com/iron-io/ironcli
+
+Then upload this worker to IronWorker:
 
 ```
-iron worker upload hello.zip ruby hello.rb
+ironcli upload hello.zip ruby hello.rb
 ```
+
+And queue up jobs for it!
+
+```
+ironcli queue --payload-file hello.payload.json hello
+```
+
