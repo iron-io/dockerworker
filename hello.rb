@@ -1,6 +1,6 @@
 require_relative 'iron_worker'
-# require 'iron_mq'
-require_relative 'bundle/bundler/setup'
+require 'iron_mq'
+# require_relative 'bundle/bundler/setup'
 
 puts "Hello Worker!"
 
