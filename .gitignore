@@ -21,3 +21,5 @@ doc/
 iron.json
 
 vendor/
+bundle/
+hello.zip

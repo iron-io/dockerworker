@@ -16,37 +16,48 @@ work normally, but when you run it in the docker container it doesn't. If it wor
 
 ## Trying this out
 
-To run hello.rb example, first:
+First, let's run the example as is:
 
+```sh
+ruby hello.rb --payload hello.payload.json --config hello.config.yml --id 123
 ```
-bundle install --standalone
-```
 
-I've already add this line to use the bundled gems: `require_relative 'bundle/bundler/setup'`
-
-Then run it: 
+Now let's run it in the docker container:
 
 ```
 docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:ruby-2.1 sh -c 'ruby hello.rb --payload hello.payload.json --config hello.config.yml --id 123'
 ```
 
-Then if it works, they can run the following to package:
+Doh! Doesn't work, it can't find the iron_mq gem inside the container. We need to ensure we have all our dependencies
+available locally. So let's install our gems locally.
+
+```
+bundle install --standalone
+```
+
+Then open hello.rb and replace `require 'iron_mq'` with `require_relative 'bundle/bundler/setup'`.  Now let's run it again
+inside Docker.
+
+```
+docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:ruby-2.1 sh -c 'ruby hello.rb --payload hello.payload.json --config hello.config.yml --id 123'
+```
+
+Boom, it works! So let's package it up to upload to IronWorker:
 
 ```
 zip -r hello.zip .
 ```
 
-Get the new Go based ironcli at https://github.com/iron-io/ironcli
+Get the new Go based ironcli at https://github.com/iron-io/ironcli (see README for one liner installation).
 
-Then upload this worker to IronWorker:
-
-```
-ironcli upload hello.zip ruby hello.rb
-```
-
-And queue up jobs for it!
+Then upload it:
 
 ```
-ironcli queue --payload-file hello.payload.json hello
+iron upload hello.zip ruby hello.rb
 ```
 
+And finally queue up jobs for it! One or millions.
+
+```
+iron queue --payload-file hello.payload.json hello
+```
