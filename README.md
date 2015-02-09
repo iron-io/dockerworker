@@ -1,63 +1,92 @@
-hello_worker
+Docker Worker
 ============
 
 ## What is this?
 
-Use our docker stacks to dev and test locally with the exact same environment as it has when when it runs remote. 
+Use the Iron.io Docker stacks to locally dev and test your IronWorker workers in the exact same environment it will
+have when running remotely on the IronWorker cloud. 
 
 
-## The dev/test process for a user will be much cleaner
+## T
 
-1. Create a script. All dependencies must in the current directory or in sub-directories. This is the key thing. It may
-work normally, but when you run it in the docker container it doesn't. If it works in the container, then you're all good.
-2. Create input/payload example file (they should check this into source control)
-3. Run/test script with example file (see docker command below)
-4. Once it works, upload it and it should work no problem (assuming the input is the same format as the example).
+The new dev/test workflow is much simpler and quicker. The general workflow is the following:
 
-## Trying this out
+1. Create your worker. All dependencies must in the current directory or in sub-directories.
+2. Create an input/payload example file (check this into source control as an example)
+3. Run your worker locally inside an Iron.io Stack container.
+4. Debug/test until you get it working properly. 
+4. Once it works like you want it to, upload it to IronWorker. You should only have to do this once until you want to make changes.
 
-First, let's run the example as is:
+## Quick Example
+
+Note: You'll need Ruby and Docker installed on your machine to use this example.
+
+First, install the new [Iron cli](https://github.com/iron-io/ironcli) tool:
+
+```sh
+curl -sSL http://get.iron.io/cli | sh
+```
+
+To check that it was installed properly, run:
+
+```sh
+iron --version
+```
+
+Now on to this example. Install the dependencies to your system.
+
+```sh
+bundle install
+```
+
+Now run the example worker in this repo called hello.rb, outside of the Iron.io Stack container.
 
 ```sh
 ruby hello.rb --payload hello.payload.json --config hello.config.yml --id 123
 ```
 
-Now let's run it in the docker container:
+Now try running it in the docker container:
 
-```
+```sh
 docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:ruby-2.1 sh -c 'ruby hello.rb --payload hello.payload.json --config hello.config.yml --id 123'
 ```
 
-Doh! Doesn't work, it can't find the iron_mq gem inside the container. We need to ensure we have all our dependencies
-available locally. So let's install our gems locally.
+Doh! Doesn't work! You should see an error with this in it: ``require': cannot load such file -- iron_mq (LoadError)`, 
+which means it can't find the iron_mq gem inside the container. We need to ensure we have all our dependencies
+available inside the container and we do that by vendoring them into the same directory as your worker. 
+So let's install our gems into this folder using bundler. 
 
-```
+```sh
 bundle install --standalone
 ```
 
-Then open hello.rb and replace `require 'iron_mq'` with `require_relative 'bundle/bundler/setup'`.  Now let's run it again
+Now we need to make a slight modification to hello.rb to use the vendored gems. Open hello.rb and 
+replace `require 'iron_mq'` with `require_relative 'bundle/bundler/setup'`.  Now run it again
 inside Docker.
 
-```
+```sh
 docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:ruby-2.1 sh -c 'ruby hello.rb --payload hello.payload.json --config hello.config.yml --id 123'
 ```
 
-Boom, it works! So let's package it up to upload to IronWorker:
+Boom, it works! And now that it works, we know it will work on IronWorker.
 
-```
+Let's package it up:
+
+```sh
 zip -r hello.zip .
 ```
 
-Get the new Go based ironcli at https://github.com/iron-io/ironcli (see README for one liner installation).
-
 Then upload it:
 
-```
-iron upload hello.zip ruby hello.rb
+```sh
+iron worker upload --stack ruby-2.1 hello.zip ruby hello.rb
 ```
 
-And finally queue up jobs for it! One or millions.
+And finally queue up a job for it!
 
+```sh
+iron worker queue --payload-file hello.payload.json --wait hello
 ```
-iron queue --payload-file hello.payload.json hello
-```
+
+The `--wait` parameter waits for the job to finish, then prints the output. 
+You will also see a link to [HUD](http://hud.iron.io) where you can see all the rest of the task details along with the log output.
