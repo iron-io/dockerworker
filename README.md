@@ -4,8 +4,7 @@ Docker Worker
 ## What is this?
 
 Use the Iron.io Docker stacks to locally dev and test your IronWorker workers in the exact same environment it will
-have when running remotely on the IronWorker cloud. 
-
+have when running remotely on the IronWorker cloud.
 
 ## The New Dev/Test Workflow
 
@@ -26,6 +25,8 @@ First, install the new [Iron cli](https://github.com/iron-io/ironcli) tool:
 ```sh
 curl -sSL http://get.iron.io/cli | sh
 ```
+
+Or if you'd prefer to download it yourself, you can grab the latest release from here: https://github.com/iron-io/ironcli
 
 To check that it was installed properly, run:
 
@@ -81,6 +82,8 @@ Then upload it:
 ```sh
 iron worker upload --stack ruby-2.1 hello.zip ruby hello.rb
 ```
+
+Notice the --stack parameter is the same as the Docker container we used above.
 
 And finally queue up a job for it!
 
