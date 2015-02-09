@@ -16,7 +16,7 @@ The new dev/test workflow is much simpler and quicker. The general workflow is t
 4. Debug/test until you get it working properly. 
 4. Once it works like you want it to, upload it to IronWorker. You should only have to do this once until you want to make changes.
 
-## Quick Example
+## Quick Example for a Ruby Worker
 
 Note: You'll need Ruby and Docker installed on your machine to use this example.
 
@@ -34,7 +34,19 @@ To check that it was installed properly, run:
 iron --version
 ```
 
-Now on to this example. Install the dependencies to your system.
+Now on to this example. First clone this repo:
+
+```sh
+git clone https://github.com/iron-io/dockerworker.git
+```
+
+And cd into it:
+
+```sh
+cd dockerworker
+```
+
+Install the dependencies to your system.
 
 ```sh
 bundle install
