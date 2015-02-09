@@ -26,7 +26,7 @@ First, install the new [Iron cli](https://github.com/iron-io/ironcli) tool:
 curl -sSL http://get.iron.io/cli | sh
 ```
 
-Or if you'd prefer to download it yourself, you can grab the latest release from here: https://github.com/iron-io/ironcli
+Or if you'd prefer to download it yourself, you can grab the latest release from here: https://github.com/iron-io/ironcli/releases
 
 To check that it was installed properly, run:
 
