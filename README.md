@@ -16,35 +16,44 @@ The new dev/test workflow is much simpler and quicker. The general workflow is t
 4. Debug/test until you get it working properly. 
 4. Once it works like you want it to, upload it to IronWorker. You should only have to do this once until you want to make changes.
 
-## Quick Example for a Ruby Worker
+## Getting Started
 
-Note: You'll need Ruby and Docker installed on your machine to use this example.
+1\. You'll need [Docker](http://docker.com) installed on your machine to try this out.
 
-First, install the new [Iron cli](https://github.com/iron-io/ironcli) tool:
-
+2\. You'll want to install the new [Iron cli](https://github.com/iron-io/ironcli) tool as well (not totally necessary, but makes things a lot easier):
+                   
 ```sh
 curl -sSL http://get.iron.io/cli | sh
 ```
 
 Or if you'd prefer to download it yourself, you can grab the latest release from here: https://github.com/iron-io/ironcli/releases
 
-To check that it was installed properly, run:
-
+3\. Check that the Iron cli tool was installed properly:
+    
 ```sh
 iron --version
 ```
 
-Now on to this example. First clone this repo:
-
+4\. Clone this repo:
+    
 ```sh
 git clone https://github.com/iron-io/dockerworker.git
 ```
 
-And cd into it:
-
+And cd into the directory:
+    
 ```sh
 cd dockerworker
 ```
+
+Now you're ready to try the examples.
+
+## Quick Example for a Ruby Worker (5 minutes)
+
+This example will show you how to include dependencies with your worker so it will work right when you run it 
+remotely on IronWorker.
+
+Note: You'll need Ruby installed on your machine to use this example.
 
 Install the dependencies to your system.
 
@@ -52,13 +61,14 @@ Install the dependencies to your system.
 bundle install
 ```
 
-Now run the example worker in this repo called hello.rb, outside of the Iron.io Stack container.
+Now run the example worker in this repo called hello.rb, outside of the Iron.io container.
 
 ```sh
 ruby hello.rb --payload hello.payload.json --config hello.config.yml --id 123
 ```
 
-Now try running it in the docker container:
+Now try running it in an Iron.io Docker container, [stack](http://dev.iron.io/worker/reference/environment/#default_language_versions), (if this is your first time running this, it will take a bit to download
+the Docker container so be patient, it will only do it the first time):
 
 ```sh
 docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:ruby-2.1 sh -c 'ruby hello.rb --payload hello.payload.json --config hello.config.yml --id 123'
@@ -105,3 +115,57 @@ iron worker queue --payload-file hello.payload.json --wait hello
 
 The `--wait` parameter waits for the job to finish, then prints the output. 
 You will also see a link to [HUD](http://hud.iron.io) where you can see all the rest of the task details along with the log output.
+
+## Quick Example for a Go Worker (3 minutes)
+
+This example will show you how to compile your code with the same architecture we have on IronWorker so it will
+run properly. 
+
+Note: This will only be interesting if you have a Mac or Windows or something non Linux AMD64.
+Note: You'll need the Go sdk installed on your machine. 
+
+TODO: Use a lib to read in payload or just do the full load file and parse to read payload. 
+
+Let's build hello.go and run it. 
+
+```sh
+go build -o hello && ./hello
+```
+
+All good. Let's run it in the Iron.io Docker container:
+
+```sh
+docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:go-1.4 sh -c './hello --payload hello.payload.json --config hello.config.yml --id 123'
+```
+
+Doh!  Doesn't work!?  Why? Because you're building it on a different architecture that IronWorker.
+
+So let's build it on the right architecture using the actual Docker image it will be running on. 
+
+```sh
+docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:go-1.4 sh -c 'go build -o hello'
+```
+
+And run it again:
+
+```sh
+docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:go-1.4 sh -c './hello --payload hello.payload.json --config hello.config.yml --id 123'
+```
+
+And now it works, so let's package it up:
+
+```sh
+zip -r hello-go.zip .
+```
+
+And upload it:
+
+```sh
+iron worker upload --stack go-1.4 hello-go.zip ./hello
+```
+
+Now queue up a task (or 1 million):
+
+```sh
+iron worker queue --payload-file hello.payload.json --wait hello-go
+```
