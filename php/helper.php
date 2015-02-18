@@ -10,10 +10,10 @@ function getArgs($assoc = true) {
   foreach ($argv as $k => $v) {
     if (empty($argv[$k + 1])) continue;
 
-    if ($v == '-id') $args['task_id'] = $argv[$k + 1];
-    if ($v == '-d')  $args['dir']     = $argv[$k + 1];
+    if ($v == '-id' || $v == '--id') $args['task_id'] = $argv[$k + 1];
+    if ($v == '-d' || $v == '--d')  $args['dir']     = $argv[$k + 1];
 
-    if ($v == '-payload' && file_exists($argv[$k + 1])) {
+    if (($v == '-payload' || $v == '--payload') && file_exists($argv[$k + 1])) {
       $args['payload'] = file_get_contents($argv[$k + 1]);
 
       $parsed_payload = json_decode($args['payload'], $assoc);
@@ -23,7 +23,7 @@ function getArgs($assoc = true) {
       }
     }
 
-    if ($v == '-config' && file_exists($argv[$k + 1])) {
+    if (($v == '-config' || $v == '--config') && file_exists($argv[$k + 1])) {
       $args['config'] = file_get_contents($argv[$k + 1]);
 
       $parsed_config = json_decode($args['config'], $assoc);
