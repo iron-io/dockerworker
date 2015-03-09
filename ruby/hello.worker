@@ -1,5 +1,0 @@
-runtime 'ruby'
-
-gem 'iron_mq'
-
-exec 'hello.rb'

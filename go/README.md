@@ -11,27 +11,29 @@ TODO: Use a lib to read in payload or just do the full load file and parse to re
 Let's build hello.go and run it.
 
 ```sh
-go build -o hello && ./hello
+go build -o hello && ./hello -payload hello.payload.json -config hello.config.yml -id 123
 ```
 
 All good. Let's run it in the Iron.io Docker container:
 
 ```sh
-docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:go-1.4 sh -c './hello --payload hello.payload.json --config hello.config.yml --id 123'
+docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:go-1.4 sh -c './hello -payload hello.payload.json -config hello.config.yml -id 123'
 ```
 
 Doh!  Doesn't work!?  Why? Because you're building it on a different architecture that IronWorker.
 
-So let's build it on the right architecture using the actual Docker image it will be running on.
+So let's build it on the right architecture using the actual Docker image it will be running on. We need to have the
+dependencies available in the docker container while building so we'll use godep to do that. 
 
 ```sh
-docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:go-1.4 sh -c 'go build -o hello'
+godep save
+docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:go-1.4 sh -c 'GOPATH=$GOPATH:"/usr/src/myapp/Godeps/_workspace" go build -o hello'
 ```
 
 And run it again:
 
 ```sh
-docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:go-1.4 sh -c './hello --payload hello.payload.json --config hello.config.yml --id 123'
+docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:go-1.4 sh -c './hello -payload hello.payload.json -config hello.config.yml -id 123'
 ```
 
 And now it works, so let's package it up:
@@ -49,5 +51,5 @@ iron worker upload --stack go-1.4 hello-go.zip ./hello
 Now queue up a task (or 1 million):
 
 ```sh
-iron worker queue --payload-file hello.payload.json --wait hello-go
+iron worker queue -payload-file hello.payload.json --wait hello-go
 ```
