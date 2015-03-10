@@ -1,6 +1,6 @@
 # require_relative 'bundle/bundler/setup'
 require 'iron_mq'
-require 'iron_worker'
+require_relative 'iron_worker'
 
 puts "Hello #{IronWorker.payload["name"]}!"
 puts
