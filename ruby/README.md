@@ -34,7 +34,7 @@ bundle install --standalone
 ```
 
 Now we need to make a slight modification to hello.rb to use the vendored gems. Open hello.rb and
-replace `require 'iron_mq'` with `require_relative 'bundle/bundler/setup'`.  Now run it again
+replace and add `require_relative 'bundle/bundler/setup'` at the top of the file.  Now run it again
 inside Docker.
 
 ```sh
