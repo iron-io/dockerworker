@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "iron_mq": "*"
+    "iron_mq": "*",
+    "iron_worker": ">= 0.1.4"
   }
 }
