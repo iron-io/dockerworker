@@ -3,10 +3,7 @@
 This example will show you how to compile your code with the same architecture we have on IronWorker so it will
 run properly.
 
-Note: This will only be interesting if you have a Mac or Windows or something non Linux AMD64.
-Note: You'll need the Go sdk installed on your machine.
-
-TODO: Use a lib to read in payload or just do the full load file and parse to read payload.
+Note: This will be more interesting if you have a Mac or Windows or something non Linux AMD64.
 
 Let's build hello.go and run it.
 
@@ -20,7 +17,7 @@ All good. Let's run it in the Iron.io Docker container:
 docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:go-1.4 sh -c './hello -payload hello.payload.json -config hello.config.yml -id 123'
 ```
 
-Doh!  Doesn't work!?  Why? Because you're building it on a different architecture that IronWorker.
+Doh!  Doesn't work!?  Why? Because you're building it on a different architecture than IronWorker.
 
 So let's build it on the right architecture using the actual Docker image it will be running on. We need to have the
 dependencies available in the docker container while building so we'll use godep to do that. 
