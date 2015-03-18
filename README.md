@@ -48,7 +48,9 @@ cd dockerworker
 
 Now you're ready to try the examples, choose your weapon:
 
+* [Go](https://github.com/iron-io/dockerworker/tree/master/go)
+* [Java](https://github.com/iron-io/dockerworker/tree/master/go)
+* [Node](https://github.com/iron-io/dockerworker/tree/master/node)
 * [PHP](https://github.com/iron-io/dockerworker/tree/master/php)
 * [Ruby](https://github.com/iron-io/dockerworker/tree/master/ruby)
-* [Go](https://github.com/iron-io/dockerworker/tree/master/go)
 
