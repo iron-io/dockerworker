@@ -27,14 +27,15 @@ docker run --rm -v "$(pwd)":/worker -w /worker iron/images:ruby-2.1 sh -c 'ruby 
 Doh! Doesn't work! You should see an error with this in it: ``require': cannot load such file -- iron_mq (LoadError)`,
 which means it can't find the iron_mq gem inside the container. We need to ensure we have all our dependencies
 available inside the container and we do that by vendoring them into the same directory as your worker.
-So let's install our gems into this folder using bundler.
+So let's install our gems into this folder using bundler and we're doing it inside Docker in case 
+there are some native extensions.
 
 ```sh
-bundle install --standalone
+docker run --rm -v "$(pwd)":/worker -w /worker iron/images:ruby-2.1 sh -c 'bundle install --standalone'
 ```
 
-Now we need to make a slight modification to hello.rb to use the vendored gems. Open hello.rb and
-replace and add `require_relative 'bundle/bundler/setup'` at the top of the file.  Now run it again
+Now we need to make a slight modification to hello.rb to use the vendored gems. Open hello.rb and 
+add `require_relative 'bundle/bundler/setup'` at the top of the file.  Now run it again
 inside Docker.
 
 ```sh

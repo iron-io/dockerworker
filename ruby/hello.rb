@@ -1,4 +1,4 @@
-require_relative 'bundle/bundler/setup'
+#require_relative 'bundle/bundler/setup'
 require 'iron_mq'
 require 'iron_worker'
 
