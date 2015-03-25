@@ -1,4 +1,4 @@
 Main-Class: Worker101
-Class-Path: json-java.jar gson-1.7.jar
+Class-Path: json-java.jar gson-2.2.4.jar ironworker.jar
 
 
