@@ -9,6 +9,7 @@ import com.google.gson.JsonParser;
 import java.net.URL;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import io.iron.ironworker.client.helpers.WorkerHelper;
 
 public class Worker101 {
 
@@ -17,12 +18,26 @@ public class Worker101 {
      */
     public static void main(String[] args) throws Exception{
         System.out.println("Running worker");
+        WorkerHelper helper = WorkerHelper.fromArgs(args);
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(System.in));
         String urlstr = "http://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&format=json&titles=";
         StringBuffer buff = new StringBuffer();
 
-        urlstr += parse_payload(args);
+        // First way
+        // Edit PayloadData.java file according to structure of your payload
+        PayloadData payload = helper.getPayload(PayloadData.class);
+        urlstr += payload.getQuery();
+
+        // Second way
+        // For more info about JsonObject look at
+        //     http://google-gson.googlecode.com/svn/tags/1.2.3/docs/javadocs/com/google/gson/JsonObject.html
+        // PayloadData payload = helper.getPayloadJson();
+        // urlstr += payload.get("query_string").getAsString();
+
+        // Third way:
+        // String rawPayload = helper.getPayload();
+        // Parse, print or do anything you want with this string
 
         URL url = new URL(urlstr);
         BufferedReader br = new BufferedReader(
@@ -41,59 +56,6 @@ public class Worker101 {
         System.out.println(wikiRes.toString()+"\n");
         writeFile("output.txt", wikiRes.toString());
     }
-
-        private static String parse_payload(String[] args) {
-            //obtain the filename from the passed arguments
-            int payloadPos = -1;
-            for(int i=0; i < args.length; i++) {
-                    if(args[i].equals("-payload")) {
-                            payloadPos = i + 1;
-                            break;
-                    }
-            }
-            if(payloadPos >= args.length) {
-                    System.err.println("Invalid payload argument.");
-                    System.exit(1);
-            }
-            if(payloadPos == -1) {
-                    System.err.println("No payload argument.");
-                    System.exit(1);
-            }
-
-            //read the contents of the file to a string
-            String payload = "";
-
-            try {
-                    payload = readFile(args[payloadPos]);
-            } catch (IOException e) {
-                    System.err.println("IOException");
-                    System.exit(1);
-            }
-            String query = "iron.io";
-            try {
-                //parse the string as JSON
-                Gson gson = new Gson();
-                JsonParser parser = new JsonParser();
-                JsonObject passed_args = parser.parse(payload).getAsJsonObject();
-                query =  gson.fromJson(passed_args.get("query"), String.class);
-                System.out.println("Query from payload: " + query);
-             } catch (IllegalStateException e) {
-               System.err.println("Payload is empty");
-             }
-             return query;
-        }
-
-        private static String readFile(String path) throws IOException {
-            FileInputStream stream = new FileInputStream(new File(path));
-            try {
-                    FileChannel chan = stream.getChannel();
-                    MappedByteBuffer buf = chan.map(FileChannel.MapMode.READ_ONLY, 0, chan.size());
-                    return Charset.defaultCharset().decode(buf).toString();
-            }
-            finally {
-                    stream.close();
-            }
-        }
 
         private static void writeFile(String path,String content) throws IOException {
                     Writer out = new OutputStreamWriter(new FileOutputStream(path));
