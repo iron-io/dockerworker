@@ -22,6 +22,28 @@ the Docker container so be patient, it will only do it the first time):
 docker run --rm -v "$(pwd)":/worker -w /worker iron/images:python-2.7 sh -c 'python hello.py -payload hello.payload.json'
 ```
 
+Doh! Doesn't work! You should see an error with this in it:`ImportError: No module named iron_mq`,
+which means it can't find the iron_mq module inside the container. We need to ensure we have all our dependencies
+available inside the container and we do that by vendoring them into the same directory as your worker.
+So let's install our modules into this folder using `pip install -t packages -r requirements.txt` and we're doing it inside Docker in case 
+there are some native extensions.
+
+```sh
+docker run --rm -v "$(pwd)":/worker -w /worker iron/images:python-2.7 sh -c 'pip install -t packages -r requirements.txt'
+```
+
+Now we need to make a slight modification to hello.py to use the vendored modules. Open hello.py and 
+add 
+```python
+import sys
+sys.path.append("packages")
+``` 
+at the top of the file. Now run it again inside Docker.
+
+```sh
+docker run --rm -v "$(pwd)":/worker -w /worker iron/images:python-2.7 sh -c 'python hello.py -payload hello.payload.json'
+```
+
 It works! And now that it works, we know it will work on IronWorker.
 
 Let's package it up:

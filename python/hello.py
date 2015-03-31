@@ -1,3 +1,5 @@
+import sys
+sys.path.append("packages")
 import iron_mq
 import iron_worker
 from helper import *
