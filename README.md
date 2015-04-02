@@ -54,3 +54,11 @@ Now you're ready to try the examples, choose your weapon:
 * [PHP](https://github.com/iron-io/dockerworker/tree/master/php)
 * [Ruby](https://github.com/iron-io/dockerworker/tree/master/ruby)
 
+## Troubleshooting
+
+### Windows Users
+
+If you are using boot2docker on Windows, please note the following: 
+
+The Linux VM in the boot2docker VirtualBox maps the c/Users directory in the VM instance to the C:\Users folder in Windows. So be sure your source code for your worker is in a folder under C:\Users, then cd to that folder in the context of the VM (in Boot2Docker terminal) and run it from there. 
+
