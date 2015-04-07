@@ -18,7 +18,13 @@ The new dev/test workflow is much simpler and quicker. The general workflow is t
 
 ## Getting Started
 
-1\. You'll need [Docker](http://docker.com) installed on your machine to try this out.
+1\. You'll need [Docker](http://docker.com) installed and running on your machine to use this. Run:
+
+```sh
+docker info
+```
+
+This should print information about your Docker installation. If it doesn't, you don't have Docker setup properly. 
 
 2\. You'll want to install the new [Iron cli](https://github.com/iron-io/ironcli) tool as well (not totally necessary, but makes things a lot easier):
                    

@@ -3,6 +3,8 @@
 This is a simple worker that will just print "Hello world!" Not a very useful example, but you'll be running code
 on the IronWorker platform in minutes. 
 
+**Note**: Be sure you've followed the base [getting started instructions on the top level README](https://github.com/iron-io/dockerworker). 
+
 ```sh
 docker run --rm -v "$(pwd)":/worker -w /worker iron/images:ruby-2.1 sh -c 'ruby helloworld.rb'
 ```

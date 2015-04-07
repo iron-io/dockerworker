@@ -3,6 +3,8 @@
 This example will show you how to compile your code with the same architecture we have on IronWorker so it will
 run properly.
 
+**Note**: Be sure you've followed the base [getting started instructions on the top level README](https://github.com/iron-io/dockerworker). 
+
 Note: This will be more interesting if you have a Mac or Windows or something non Linux AMD64.
 
 Let's build hello.go and run it.

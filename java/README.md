@@ -3,6 +3,8 @@
 This example will show you how to build your Java IronWorker, test it locally, then upload it
 to IronWorker for production.
 
+**Note**: Be sure you've followed the base [getting started instructions on the top level README](https://github.com/iron-io/dockerworker). 
+
 First, let's build it on the right architecture using the actual Docker image it will be running on. The
 dependencies are passed into javac. 
 
