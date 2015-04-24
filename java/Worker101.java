@@ -2,11 +2,14 @@ import java.io.*;
 import java.nio.MappedByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.channels.FileChannel;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+
 import java.net.URL;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import io.iron.ironworker.client.helpers.WorkerHelper;
@@ -16,7 +19,7 @@ public class Worker101 {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         System.out.println("Running worker");
         WorkerHelper helper = WorkerHelper.fromArgs(args);
         BufferedReader in = new BufferedReader(
@@ -41,30 +44,28 @@ public class Worker101 {
 
         URL url = new URL(urlstr);
         BufferedReader br = new BufferedReader(
-                                    new InputStreamReader(
-                                    url.openConnection().getInputStream()));
+                new InputStreamReader(
+                        url.openConnection().getInputStream()));
         int c;
-        while((c=br.read())!=-1)
-        {
-            buff.append((char)c);
+        while ((c = br.read()) != -1) {
+            buff.append((char) c);
         }
         br.close();
 
         JSONObject js = new JSONObject(buff.toString());
         JSONObject wikiRes = js.getJSONObject("query").getJSONObject("pages");
 
-        System.out.println(wikiRes.toString()+"\n");
+        System.out.println(wikiRes.toString() + "\n");
         writeFile("output.txt", wikiRes.toString());
     }
 
-        private static void writeFile(String path,String content) throws IOException {
-                    Writer out = new OutputStreamWriter(new FileOutputStream(path));
-                    try {
-                      out.write(content);
-                    }
-                    finally {
-                      out.close();
-                    }
+    private static void writeFile(String path, String content) throws IOException {
+        Writer out = new OutputStreamWriter(new FileOutputStream(path));
+        try {
+            out.write(content);
+        } finally {
+            out.close();
+        }
 
-                }
+    }
 }

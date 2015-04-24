@@ -8,6 +8,7 @@ remotely on IronWorker.
 **Note**: You'll need Node.js installed on your machine to use this example.
 
 Install the dependencies to your system.
+
 ```sh
 npm install
 ```
@@ -21,7 +22,7 @@ Now try running it in an Iron.io Docker container, [stack](http://dev.iron.io/wo
 the Docker container so be patient, it will only do it the first time):
 
 ```sh
-docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:node-0.10 sh -c 'node hello.js -payload hello.payload.json'
+docker run --rm -v "$(pwd)":/worker -w /worker iron/images:node-0.10 sh -c 'node hello.js -payload hello.payload.json'
 ```
 
 It works! And now that it works, we know it will work on IronWorker.

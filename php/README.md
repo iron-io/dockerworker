@@ -21,7 +21,7 @@ Now try running it in an Iron.io Docker container, [stack](http://dev.iron.io/wo
 the Docker container so be patient, it will only do it the first time):
 
 ```sh
-docker run --rm -v "$(pwd)":/usr/src/myapp -w /usr/src/myapp iron/images:php-5.4 sh -c 'php hello.php -payload hello.payload.json'
+docker run --rm -v "$(pwd)":/worker -w /worker iron/images:php-5.6 sh -c 'php hello.php -payload hello.payload.json'
 ```
 
 It works! And now that it works, we know it will work on IronWorker.
@@ -29,13 +29,13 @@ It works! And now that it works, we know it will work on IronWorker.
 Let's package it up:
 
 ```sh
-zip -r hello.zip .
+zip -r hello-php.zip .
 ```
 
 Then upload it:
 
 ```sh
-iron worker upload --stack php-5.4 hello.zip php hello.php
+iron worker upload --stack php-5.6 hello-php.zip php hello.php
 ```
 
 Notice the --stack parameter is the same as the Docker container we used above.
@@ -43,7 +43,7 @@ Notice the --stack parameter is the same as the Docker container we used above.
 And finally queue up a job for it!
 
 ```sh
-iron worker queue --payload-file hello.payload.json --wait hello
+iron worker queue --payload-file hello.payload.json --wait hello-php
 ```
 
 The `--wait` parameter waits for the job to finish, then prints the output.
