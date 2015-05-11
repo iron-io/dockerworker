@@ -63,8 +63,48 @@ Notice the --stack parameter is the same as the Docker container we used above.
 And finally queue up a job for it!
 
 ```sh
-iron worker queue -payload-file hello.payload.json --wait hello
+iron worker queue --payload-file hello.payload.json --wait hello
 ```
 
 The `--wait` parameter waits for the job to finish, then prints the output.
 You will also see a link to [HUD](http://hud.iron.io) where you can see all the rest of the task details along with the log output.
+
+## Bundling the worker inside a Docker image
+
+**NOTE**: This requires custom image docker feature on your IronWorker account. 
+
+Build it:
+
+```sh
+docker build -t treeder/hello.rb .
+```
+
+Run it to test it:
+
+```sh
+docker run treeder/hello.rb
+```
+
+Tag it with a version tag so you can be sure IronWorker has the latest version:
+
+```sh
+docker tag treeder/hello.rb treeder/hello.rb:v0.0.2
+```
+
+Push it to docker hub:
+
+```sh
+docker push treeder/hello.rb
+```
+
+Upload it to IronWorker:
+
+```sh
+iron worker upload --name helloimage treeder/hello.rb:v0.0.2
+```
+
+Then queue up a task for it:
+
+```sh
+iron worker queue --wait --payload-file hello.payload.json helloimage
+```
