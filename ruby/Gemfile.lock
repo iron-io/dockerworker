@@ -5,7 +5,7 @@ GEM
       rest (>= 3.0.4)
     iron_mq (5.0.1)
       iron_core (>= 0.5.1)
-    iron_worker (3.0.1)
+    iron_worker (3.1.0)
       iron_core (>= 0.5.1)
       rest (>= 3.0.6)
     net-http-persistent (2.9.4)

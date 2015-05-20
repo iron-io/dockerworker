@@ -82,7 +82,7 @@ docker build -t treeder/hello.rb .
 Run it to test it:
 
 ```sh
-docker run treeder/hello.rb
+docker run --rm -e "PAYLOAD_FILE=/wdata/hello.payload.json" -v "$(pwd)":/wdata treeder/hello.rb
 ```
 
 Tag it with a version tag so you can be sure IronWorker has the latest version:
