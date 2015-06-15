@@ -57,7 +57,7 @@ zip -r hello.zip .
 Then upload it:
 
 ```sh
-iron worker upload --stack python-2.7 hello.zip python hello.py
+iron worker upload --name hello --zip hello.zip iron/images:python-2.7 python hello.py
 ```
 
 Notice the --stack parameter is the same as the Docker container we used above.

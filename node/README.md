@@ -36,7 +36,7 @@ zip -r hello.zip .
 Then upload it:
 
 ```sh
-iron worker upload --stack node-0.10 hello.zip node hello.js
+iron worker upload --name hello --zip hello.zip iron/images:node-0.10 node hello.js
 ```
 
 Notice the --stack parameter is the same as the Docker container we used above.

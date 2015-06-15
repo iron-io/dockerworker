@@ -27,7 +27,7 @@ zip -r hello-java.zip .
 And upload it:
 
 ```sh
-iron worker upload --stack java-1.8 hello-java.zip java -cp gson-2.2.4.jar:json-java.jar:ironworker.jar:. Worker101
+iron worker upload --name hello-java --zip hello-java.zip iron/images:java-1.8 java -cp gson-2.2.4.jar:json-java.jar:ironworker.jar:. Worker101
 ```
 
 Now queue up a task (or 1 million):

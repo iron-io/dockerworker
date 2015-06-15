@@ -29,7 +29,7 @@ go get github.com/iron-io/iron_go/worker
 And build it:
 
 ```sh
- docker run --rm -v "$GOPATH":/gopath -v "$(pwd)":/worker -w /worker google/golang sh -c 'go build -o hello'
+docker run --rm -v "$GOPATH":/gopath -v "$(pwd)":/worker -w /worker iron/images:go-1.4 sh -c 'go build -o hello'
 ```
 
 We're using the google/golang container because the Iron one doesn't have the right tools setup to build properly. 
@@ -50,7 +50,7 @@ zip -r hello-go.zip .
 And upload it:
 
 ```sh
-iron worker upload --stack go-1.4 hello-go.zip ./hello
+iron worker upload --name hello-go --zip hello-go.zip iron/images:go-1.4 ./hello
 ```
 
 Now queue up a task (or 1 million):

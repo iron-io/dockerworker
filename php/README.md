@@ -35,7 +35,7 @@ zip -r hello-php.zip .
 Then upload it:
 
 ```sh
-iron worker upload --stack php-5.6 hello-php.zip php hello.php
+iron worker upload --name hello-php --zip hello-php.zip iron/images:php-5.6 php hello.php
 ```
 
 Notice the --stack parameter is the same as the Docker container we used above.
