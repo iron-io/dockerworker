@@ -21,7 +21,7 @@ zip -r helloworld.zip .
 Then upload it:
 
 ```sh
-iron worker upload --name helloworld --zip helloworld.zip iron/images:ruby-2.1 helloworld.zip ruby helloworld.rb
+iron worker upload --name helloworld --zip helloworld.zip iron/images:ruby-2.1 ruby helloworld.rb
 ```
 
 Notice the --stack parameter is the same as the Docker container we used above.
