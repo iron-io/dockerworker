@@ -7,17 +7,13 @@ remotely on IronWorker.
 
 **Note**: You'll need PHP installed on your machine to use this example (And [composer](https://getcomposer.org/) for dependencies).
 
-Install the dependencies to your system.
+Install the dependencies:
+
 ```sh
 composer install
 ```
-Now run the example worker in this repo called `hello.php`, outside of the Iron.io container.
 
-```sh
-php hello.php -payload hello.payload.json
-```
-
-Now try running it in an Iron.io Docker container, [stack](http://dev.iron.io/worker/reference/environment/#default_language_versions), (if this is your first time running this, it will take a bit to download
+Now test it inside an Iron.io Docker image, [stack](http://dev.iron.io/worker/reference/environment/#default_language_versions), (if this is your first time running this, it will take a bit to download
 the Docker container so be patient, it will only do it the first time):
 
 ```sh

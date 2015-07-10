@@ -12,11 +12,6 @@ Install the dependencies to your system.
 ```sh
 npm install
 ```
-Now run the example worker in this repo called `hello.js`, outside of the Iron.io container.
-
-```sh
-node hello.js -payload hello.payload.json
-```
 
 Now try running it in an Iron.io Docker container, [stack](http://dev.iron.io/worker/reference/environment/#default_language_versions), (if this is your first time running this, it will take a bit to download
 the Docker container so be patient, it will only do it the first time):
