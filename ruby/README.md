@@ -5,40 +5,15 @@ remotely on IronWorker.
 
 **Note**: Be sure you've followed the base [getting started instructions on the top level README](https://github.com/iron-io/dockerworker). 
 
-**Note**: You'll need Ruby installed on your machine to use this example.
-
-Install the dependencies to your system.
+Vendor dependencies:
 
 ```sh
-bundle install
+docker run --rm -v "$(pwd)":/worker -w /worker iron/images:ruby-2.1 sh -c 'bundle install --standalone --clean'
 ```
 
-Now run the example worker in this repo called hello.rb, outside of the Iron.io container.
+Notice in `hello.rb`, we have the following: `require_relative 'bundle/bundler/setup'`. This makes it use the vendored gems. 
 
-```sh
-ruby hello.rb -payload hello.payload.json -config hello.config.yml -id 123
-```
-
-Now try running it in an Iron.io Docker container, [stack](http://dev.iron.io/worker/reference/environment/#default_language_versions), (if this is your first time running this, it will take a bit to download
-the Docker container so be patient, it will only do it the first time):
-
-```sh
-docker run --rm -v "$(pwd)":/worker -w /worker iron/images:ruby-2.1 sh -c 'ruby hello.rb -payload hello.payload.json -config hello.config.yml -id 123'
-```
-
-Doh! Doesn't work! You should see an error with this in it: ``require': cannot load such file -- iron_mq (LoadError)`,
-which means it can't find the iron_mq gem inside the container. We need to ensure we have all our dependencies
-available inside the container and we do that by vendoring them into the same directory as your worker.
-So let's install our gems into this folder using bundler and we're doing it inside Docker in case 
-there are some native extensions.
-
-```sh
-docker run --rm -v "$(pwd)":/worker -w /worker iron/images:ruby-2.1 sh -c 'bundle install --standalone'
-```
-
-Now we need to make a slight modification to hello.rb to use the vendored gems. Open hello.rb and 
-add `require_relative 'bundle/bundler/setup'` at the top of the file.  Now run it again
-inside Docker.
+Now test it locally:
 
 ```sh
 docker run --rm -v "$(pwd)":/worker -w /worker iron/images:ruby-2.1 sh -c 'ruby hello.rb -payload hello.payload.json -config hello.config.yml -id 123'
