@@ -4,7 +4,7 @@ import sys, json, os
 def getPayload():
     file = None
     
-    if os.environ.has_key('PAYLOAD_FILE'):
+    if 'PAYLOAD_FILE' in os.environ:
         file = os.environ['PAYLOAD_FILE']
     else:
         for i in range(len(sys.argv)):
@@ -21,7 +21,7 @@ def getPayload():
 def getTaskId():
     task_id = None
     
-    if os.environ.has_key('TASK_ID'):
+    if 'TASK_ID' in os.environ:
         task_id = os.environ['TASK_ID']
     else:
         for i in range(len(sys.argv)):
