@@ -20,6 +20,4 @@ doc/
 .idea/
 iron.json
 
-vendor/
-bundle/
 hello*.zip

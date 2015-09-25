@@ -4,5 +4,5 @@ require 'iron_worker'
 
 client = IronWorker::Client.new()
 client.tasks.create(
-    'hello', {name: "Snoop Dogg"}
+    'treeder/hello.rb', {name: "Snoop Dogg"}
 )

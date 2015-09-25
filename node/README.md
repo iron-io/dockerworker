@@ -3,21 +3,20 @@
 This example will show you how to include dependencies with your worker so it will work right when you run it
 remotely on IronWorker.
 
-**Note**: Be sure you've followed the base [getting started instructions on the top level README](https://github.com/iron-io/dockerworker). 
+**Note**: Be sure you've followed the base [getting started instructions on the top level README](https://github.com/iron-io/dockerworker).
 
 **Note**: You'll need Node.js installed on your machine to use this example.
 
 Install the dependencies to your system.
 
 ```sh
-npm install
+docker run --rm -v "$PWD":/worker -w /worker iron/node npm install
 ```
 
-Now try running it in an Iron.io Docker container, [stack](http://dev.iron.io/worker/reference/environment/#default_language_versions), (if this is your first time running this, it will take a bit to download
-the Docker container so be patient, it will only do it the first time):
+Now run it:
 
 ```sh
-docker run --rm -v "$(pwd)":/worker -w /worker iron/images:node-0.10 sh -c 'node hello.js -payload hello.payload.json'
+docker run --rm -e "PAYLOAD_FILE=hello.payload.json" -v "$PWD":/worker -w /worker iron/node node hello.js
 ```
 
 It works! And now that it works, we know it will work on IronWorker.
@@ -31,7 +30,7 @@ zip -r hello.zip .
 Then upload it:
 
 ```sh
-iron worker upload --name hello --zip hello.zip iron/images:node-0.10 node hello.js
+iron worker upload --name hellojs --zip hello.zip iron/node node hello.js
 ```
 
 Notice the --stack parameter is the same as the Docker container we used above.
@@ -39,11 +38,8 @@ Notice the --stack parameter is the same as the Docker container we used above.
 And finally queue up a job for it!
 
 ```sh
-iron worker queue --payload-file hello.payload.json --wait hello
+iron worker queue --payload-file hello.payload.json --wait hellojs
 ```
 
 The `--wait` parameter waits for the job to finish, then prints the output.
 You will also see a link to [HUD](http://hud.iron.io) where you can see all the rest of the task details along with the log output.
-
-
-

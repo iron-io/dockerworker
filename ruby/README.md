@@ -1,22 +1,25 @@
 ## Quick Example for a Ruby Worker (5 minutes)
 
-This example will show you how to include dependencies with your worker so it will work right when you run it
-remotely on IronWorker.
+This example will show you how to test and deploy Ruby code to IronWorker.
 
-**Note**: Be sure you've followed the base [getting started instructions on the top level README](https://github.com/iron-io/dockerworker). 
+**Note**: Be sure you've followed the base [getting started instructions on the top level README](https://github.com/iron-io/dockerworker).
 
-Vendor dependencies:
+Vendor dependencies (if you update your Gemfile, rerun this):
 
 ```sh
-docker run --rm -v "$(pwd)":/worker -w /worker iron/images:ruby-2.1 sh -c 'bundle install --standalone --clean'
+docker run --rm -v "$(pwd)":/worker -w /worker iron/ruby-bundle sh -c 'bundle install --standalone --clean'
 ```
 
-Notice in `hello.rb`, we have the following: `require_relative 'bundle/bundler/setup'`. This makes it use the vendored gems. 
+Notice in `hello.rb`, we add the following so it uses the vendored gems:
+
+```ruby
+require_relative 'bundle/bundler/setup'
+```
 
 Now test it locally:
 
 ```sh
-docker run --rm -v "$(pwd)":/worker -w /worker iron/images:ruby-2.1 sh -c 'ruby hello.rb -payload hello.payload.json -config hello.config.yml -id 123'
+docker run --rm -it -e "PAYLOAD_FILE=hello.payload.json" -v $PWD:/worker -w /worker iron/ruby ruby hello.rb
 ```
 
 Boom, it works! And now that it works, we know it will work on IronWorker.
@@ -30,10 +33,8 @@ zip -r hello.zip .
 Then upload it:
 
 ```sh
-iron worker upload --name hello --zip hello.zip iron/images:ruby-2.1 ruby hello.rb
+iron worker upload --name hello --zip hello.zip iron/ruby ruby hello.rb
 ```
-
-Notice the --stack parameter is the same as the Docker container we used above.
 
 And finally queue up a job for it!
 
@@ -46,40 +47,25 @@ You will also see a link to [HUD](http://hud.iron.io) where you can see all the 
 
 ## Bundling the worker inside a Docker image
 
-**NOTE**: This requires custom image docker feature on your IronWorker account. 
+Follow the same steps above to run/test your worker. But instead of zipping it up, do the following:
 
-Build it:
-
-```sh
-docker build -t treeder/hello.rb .
-```
-
-Run it to test it:
+Package it up inside an image and send it off to Docker HUB, see the `Dockerfile` for reference:
 
 ```sh
-docker run --rm -e "PAYLOAD_FILE=/wdata/hello.payload.json" -v "$(pwd)":/wdata treeder/hello.rb
+docker build -t treeder/hello.rb:latest .
 ```
 
-Tag it with a version tag so you can be sure IronWorker has the latest version:
+Test your image:
 
 ```sh
-docker tag treeder/hello.rb treeder/hello.rb:v0.0.2
+docker run --rm -it -e "PAYLOAD_FILE=hello.payload.json" treeder/hello.rb
 ```
 
-Push it to docker hub:
+Now queue up a job for it!
 
 ```sh
-docker push treeder/hello.rb
+iron worker queue --payload-file hello.payload.json --wait treeder/hello.rb
 ```
 
-Upload it to IronWorker:
-
-```sh
-iron worker upload --name helloimage treeder/hello.rb:v0.0.2
-```
-
-Then queue up a task for it:
-
-```sh
-iron worker queue --wait --payload-file hello.payload.json helloimage
-```
+The `--wait` parameter waits for the job to finish, then prints the output.
+You will also see a link to [HUD](http://hud.iron.io) where you can see all the rest of the task details along with the log output.

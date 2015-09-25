@@ -1,17 +1,14 @@
 <?php
 
 require 'vendor/autoload.php';
-require 'helper.php';
 
-
-echo "Hello!\n\n";
+echo "Hello World!\n\n";
 
 echo "Payload: ";
-print_r(getPayload(true));
+print_r(IronWorker\IronWorker::getPayload(true));
 
 echo "\nConfig: ";
-print_r(getConfig(true));
-
+print_r(IronWorker\IronWorker::getPayload(true));
 
 // Add iron.json and uncomment this block to actually use it
 /*

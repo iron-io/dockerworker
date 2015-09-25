@@ -1,13 +1,14 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    iron_core (1.0.7)
+    iron_core (1.0.9)
       rest (>= 3.0.4)
     iron_mq (5.0.1)
       iron_core (>= 0.5.1)
     iron_worker (3.1.0)
       iron_core (>= 0.5.1)
       rest (>= 3.0.6)
+    json (1.8.3)
     net-http-persistent (2.9.4)
     netrc (0.10.3)
     rest (3.0.6)
@@ -20,3 +21,7 @@ PLATFORMS
 DEPENDENCIES
   iron_mq
   iron_worker (>= 3.0.0)
+  json (> 1.8.2)
+
+BUNDLED WITH
+   1.10.5

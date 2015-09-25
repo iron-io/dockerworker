@@ -1,7 +1,6 @@
-FROM google/ruby
+FROM iron/ruby
 
 WORKDIR /app
 ADD . /app
 
-CMD []
 ENTRYPOINT ["ruby", "hello.rb"]
