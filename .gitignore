@@ -11,6 +11,8 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
+*.pyc
+packages
 
 # YARD artifacts
 .yardoc
