@@ -39,4 +39,4 @@ iron worker queue -payload-file hello.payload.json --wait hello-java
 ## Notes
 
 1. We provide Docker images for Java 1.7 as well. They are `iron/java:1.7` and `iron/java-dev:1.7`
-2. The `iron/java` images contain _only_ the JRE. They cannot be used to compile Java code.
+2. The `iron/java` images contain _only_ the JRE - they cannot be used to compile Java code. Use `iron/java-dev` images for that.
