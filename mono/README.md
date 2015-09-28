@@ -15,7 +15,7 @@ docker run --rm -v "$(pwd)":/worker -w /worker iron/mono:4.0.1 sh -c 'mcs -r:Sys
 Now run it to test it out:
 
 ```sh
-docker run --rm -v "$(pwd)":/worker -w /worker iron/mono:4.0.1 sh -c 'mono worker101.exe -payload hello.payload.json -id 123'
+docker run -e PAYLOAD_FILE=hello.payload.json --rm -v "$(pwd)":/worker -w /worker iron/mono:4.0.1 sh -c 'mono worker101.exe -id 123'
 ```
 
 Now that we have it working, let's package it up:
