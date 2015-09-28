@@ -21,7 +21,7 @@ public class Worker101 {
      */
     public static void main(String[] args) throws Exception {
         System.out.println("Running worker");
-        WorkerHelper helper = WorkerHelper.fromArgs(args);
+        WorkerHelper helper = WorkerHelper.fromArgs(new String[0]);
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(System.in));
         String urlstr = "http://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&format=json&titles=";

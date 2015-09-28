@@ -15,7 +15,7 @@ docker run --rm -v "$(pwd)":/worker -w /worker iron/java-dev:1.8 sh -c 'javac -c
 Now run it to test it out:
 
 ```sh
-docker run --rm -v "$(pwd)":/worker -w /worker iron/java:1.8 sh -c 'java -cp gson-2.2.4.jar:json-java.jar:ironworker.jar:. Worker101 -payload hello.payload.json -config hello.config.yml -id 123'
+docker run -e PAYLOAD_FILE=hello.payload.json --rm -v "$(pwd)":/worker -w /worker iron/java:1.8 sh -c 'java -cp gson-2.2.4.jar:json-java.jar:ironworker.jar:. Worker101 -config hello.config.yml -id 123'
 ```
 
 Now that we have it working, let's package it up:
