@@ -28,7 +28,8 @@ object Worker101 {
         // First way
         // Edit PayloadData.java file according to structure of your payload
         val payload = helper.getPayload(classOf[PayloadData]);
-        val urlstr = "http://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&format=json&titles=${payload.getQuery()}"
+        val urlstr = s"http://httpbin.org/get?query=${payload.getQuery()}"
+        println(urlstr)
 
         // Second way
         // For more info about JsonObject look at
@@ -54,9 +55,9 @@ object Worker101 {
         br.close()
 
         val js = new JSONObject(buff.toString())
-        val wikiRes = js.getJSONObject("query").getJSONObject("pages")
+        val wikiRes = js.getJSONObject("args")
 
-        println(wikiRes.toString() + "\n")
+        println(wikiRes.toString())
         writeFile("output.txt", wikiRes.toString());
     }
 
