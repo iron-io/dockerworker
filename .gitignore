@@ -25,3 +25,4 @@ iron.json
 hello*.zip
 *.class
 java/index.html
+mono/*.exe

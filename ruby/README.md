@@ -45,6 +45,7 @@ iron worker queue --payload-file hello.payload.json --wait hello
 The `--wait` parameter waits for the job to finish, then prints the output.
 You will also see a link to [HUD](http://hud.iron.io) where you can see all the rest of the task details along with the log output.
 
+<!--
 ## Bundling the worker inside a Docker image
 
 Follow the same steps above to run/test your worker. But instead of zipping it up, do the following:
@@ -69,3 +70,4 @@ iron worker queue --payload-file hello.payload.json --wait treeder/hello.rb
 
 The `--wait` parameter waits for the job to finish, then prints the output.
 You will also see a link to [HUD](http://hud.iron.io) where you can see all the rest of the task details along with the log output.
+-->
