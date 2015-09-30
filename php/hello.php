@@ -5,10 +5,10 @@ require 'vendor/autoload.php';
 echo "Hello World!\n\n";
 
 echo "Payload: ";
-print_r(IronWorker\IronWorker::getPayload(true));
+print_r(IronWorker\Runtime::getPayload(true));
 
 echo "\nConfig: ";
-print_r(IronWorker\IronWorker::getPayload(true));
+print_r(IronWorker\Runtime::getConfig(true));
 
 // Add iron.json and uncomment this block to actually use it
 /*

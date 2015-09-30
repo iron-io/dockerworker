@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f7170e36afb8bad753018aa7ddf917e0",
-    "content-hash": "39f32916e40f21e14449930b41a789c0",
+    "hash": "cd31400def5262b799c373cf8205c571",
+    "content-hash": "f13b737f0e84c912de74817ce064ad05",
     "packages": [
         {
             "name": "iron-io/iron_core",
@@ -111,16 +111,16 @@
         },
         {
             "name": "iron-io/iron_worker",
-            "version": "2.0.2",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/iron-io/iron_worker_php.git",
-                "reference": "7576b679797d6ee002deea44615a5c6ca29274ea"
+                "reference": "87ce7761ed2a91cd84a8f47c0c5d225572ce7624"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/iron-io/iron_worker_php/zipball/7576b679797d6ee002deea44615a5c6ca29274ea",
-                "reference": "7576b679797d6ee002deea44615a5c6ca29274ea",
+                "url": "https://api.github.com/repos/iron-io/iron_worker_php/zipball/87ce7761ed2a91cd84a8f47c0c5d225572ce7624",
+                "reference": "87ce7761ed2a91cd84a8f47c0c5d225572ce7624",
                 "shasum": ""
             },
             "require": {
@@ -156,7 +156,7 @@
                 "task",
                 "worker"
             ],
-            "time": "2015-08-11 11:11:35"
+            "time": "2015-09-25 18:04:52"
         },
         {
             "name": "wp-cli/php-cli-tools",
