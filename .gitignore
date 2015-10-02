@@ -23,6 +23,6 @@ doc/
 iron.json
 
 hello*.zip
-*.class
 java/index.html
+scala/output.txt
 mono/*.exe
