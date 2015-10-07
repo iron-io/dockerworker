@@ -9,13 +9,13 @@ First, let's build it on the right architecture using the actual Docker image it
 dependencies are passed into javac.
 
 ```sh
-docker run --rm -v "$PWD":/worker -w /worker iron/java:dev sh -c 'javac -cp "json-java.jar:gson-2.2.4.jar:ironworker-1.0.10.jar" Worker101.java PayloadData.java'
+docker run --rm -v "$PWD":/worker -w /worker iron/java:dev javac -cp "json-java.jar:gson-2.2.4.jar:ironworker-1.0.10.jar" Worker101.java PayloadData.java
 ```
 
 Now run it to test it out:
 
 ```sh
-docker run --rm  -e "PAYLOAD_FILE=hello.payload.json" -v "$PWD":/worker -w /worker iron/java sh -c 'java -cp gson-2.2.4.jar:json-java.jar:ironworker-1.0.10.jar:. Worker101'
+docker run --rm  -e "PAYLOAD_FILE=hello.payload.json" -v "$PWD":/worker -w /worker iron/java java -cp gson-2.2.4.jar:json-java.jar:ironworker-1.0.10.jar:. Worker101
 ```
 
 Now that we have it working, let's package it up:
@@ -27,7 +27,7 @@ zip -r hello-java.zip .
 And upload it:
 
 ```sh
-iron worker upload --name hello-java --zip hello-java.zip iron/images:java-1.8 java -cp gson-2.2.4.jar:json-java.jar:ironworker.jar:. Worker101
+iron worker upload --name hello-java --zip hello-java.zip iron/java java -cp gson-2.2.4.jar:json-java.jar:ironworker.jar:. Worker101
 ```
 
 Now queue up a task (or 1 million):
