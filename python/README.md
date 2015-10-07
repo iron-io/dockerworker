@@ -5,17 +5,19 @@ remotely on IronWorker.
 
 **Note**: Be sure you've followed the base [getting started instructions on the top level README](https://github.com/iron-io/dockerworker).
 
+If you want to use Python 3, change the image name in the commands below to iron/python:3.
+
 Let's install our modules into this folder using `pip install -t packages -r requirements.txt` and we're doing it
 inside Docker in case there are some native extensions.
 
 ```sh
-docker run --rm -v "$PWD":/worker -w /worker iron/python-pip pip install -t packages -r requirements.txt
+docker run --rm -v "$PWD":/worker -w /worker iron/python:2-dev pip install -t packages -r requirements.txt
 ```
 
 Now run our script inside Docker to test it:
 
 ```sh
-docker run --rm -e "PAYLOAD_FILE=hello.payload.json" -v "$PWD":/worker -w /worker iron/python python hello.py
+docker run --rm -e "PAYLOAD_FILE=hello.payload.json" -v "$PWD":/worker -w /worker iron/python:2 python hello.py
 ```
 
 And now that it works, we know it will work on IronWorker.
@@ -29,7 +31,7 @@ zip -r hello.zip .
 Then upload it:
 
 ```sh
-iron worker upload --name hellopy --zip hello.zip iron/python python hello.py
+iron worker upload --name hellopy --zip hello.zip iron/python:2 python hello.py
 ```
 
 And finally queue up a job for it!

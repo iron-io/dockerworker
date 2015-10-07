@@ -27,36 +27,10 @@ public class Worker101 {
         String urlstr = "http://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&format=json&titles=";
         StringBuffer buff = new StringBuffer();
 
-        // First way
-        // Edit PayloadData.java file according to structure of your payload
+        // Get payload data with the IronWorker helper
         PayloadData payload = helper.getPayload(PayloadData.class);
-        urlstr += payload.getQuery();
+        System.out.println("Hello " + payload.getName());
 
-        // Second way
-        // For more info about JsonObject look at
-        //     http://google-gson.googlecode.com/svn/tags/1.2.3/docs/javadocs/com/google/gson/JsonObject.html
-        // PayloadData payload = helper.getPayloadJson();
-        // urlstr += payload.get("query_string").getAsString();
-
-        // Third way:
-        // String rawPayload = helper.getPayload();
-        // Parse, print or do anything you want with this string
-
-        URL url = new URL(urlstr);
-        BufferedReader br = new BufferedReader(
-                new InputStreamReader(
-                        url.openConnection().getInputStream()));
-        int c;
-        while ((c = br.read()) != -1) {
-            buff.append((char) c);
-        }
-        br.close();
-
-        JSONObject js = new JSONObject(buff.toString());
-        JSONObject wikiRes = js.getJSONObject("query").getJSONObject("pages");
-
-        System.out.println(wikiRes.toString() + "\n");
-        writeFile("output.txt", wikiRes.toString());
     }
 
     private static void writeFile(String path, String content) throws IOException {

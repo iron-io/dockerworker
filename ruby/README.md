@@ -7,7 +7,7 @@ This example will show you how to test and deploy Ruby code to IronWorker.
 Vendor dependencies (if you update your Gemfile, rerun this):
 
 ```sh
-docker run --rm -v "$(pwd)":/worker -w /worker iron/ruby-bundle sh -c 'bundle install --standalone --clean'
+docker run --rm -v "$PWD":/worker -w /worker iron/ruby:dev bundle install --standalone --clean
 ```
 
 Notice in `hello.rb`, we add the following so it uses the vendored gems:
@@ -19,7 +19,7 @@ require_relative 'bundle/bundler/setup'
 Now test it locally:
 
 ```sh
-docker run --rm -it -e "PAYLOAD_FILE=hello.payload.json" -v $PWD:/worker -w /worker iron/ruby ruby hello.rb
+docker run --rm -it -e "PAYLOAD_FILE=hello.payload.json" -v "$PWD":/worker -w /worker iron/ruby ruby hello.rb
 ```
 
 Boom, it works! And now that it works, we know it will work on IronWorker.
