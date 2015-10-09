@@ -1,0 +1,4 @@
+deps/
+mix.lock
+_build/
+hello-elixir.zip
