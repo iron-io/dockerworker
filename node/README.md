@@ -10,7 +10,7 @@ remotely on IronWorker.
 Install the dependencies to your system.
 
 ```sh
-docker run --rm -v "$PWD":/worker -w /worker iron/node npm install
+docker run --rm -v "$PWD":/worker -w /worker iron/node:dev npm install
 ```
 
 Now run it:
