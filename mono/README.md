@@ -9,13 +9,13 @@ First, let's build it on the right architecture using the actual Docker image it
 dependencies are passed into javac.
 
 ```sh
-docker run --rm -v "$(pwd)":/worker -w /worker iron/mono:4.0.1 sh -c 'mcs -r:System.Web.Extensions.dll worker101.cs'
+docker run --rm -v "$PWD":/worker -w /worker iron/mono mcs -r:System.Web.Extensions.dll worker101.cs
 ```
 
 Now run it to test it out:
 
 ```sh
-docker run -e PAYLOAD_FILE=hello.payload.json --rm -v "$(pwd)":/worker -w /worker iron/mono:4.0.1 sh -c 'mono worker101.exe -id 123'
+docker run -e PAYLOAD_FILE=hello.payload.json --rm -v "$PWD":/worker -w /worker iron/mono: mono worker101.exe
 ```
 
 Now that we have it working, let's package it up:
@@ -27,7 +27,7 @@ zip -r hello-mono.zip .
 And upload it:
 
 ```sh
-iron worker upload --name hello-mono --zip hello-mono.zip iron/mono:4.0.1 mono worker101.exe
+iron worker upload --name hello-mono --zip hello-mono.zip iron/mono mono worker101.exe
 ```
 
 Now queue up a task (or 1 million):
