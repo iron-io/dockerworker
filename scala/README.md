@@ -9,13 +9,13 @@ First, let's build it on the right architecture using the actual Docker image it
 dependencies are passed into scalac.
 
 ```sh
-docker run --rm -v "$(pwd)":/worker -w /worker iron/scala:2.11 sh -c 'scalac -deprecation -cp "json-java.jar:gson-2.2.4.jar:ironworker.jar" Worker101.scala PayloadData.scala'
+docker run --rm -v "$PWD":/worker -w /worker iron/scala scalac -deprecation -cp "json-java.jar:gson-2.2.4.jar:ironworker.jar" Worker101.scala PayloadData.scala
 ```
 
 Now run it to test it out:
 
 ```sh
-docker run -e PAYLOAD_FILE=hello.payload.json --rm -v "$(pwd)":/worker -w /worker iron/scala:2.11 sh -c 'scala -cp gson-2.2.4.jar:json-java.jar:ironworker.jar:. Worker101 -id 123'
+docker run -e PAYLOAD_FILE=hello.payload.json --rm -v "$PWD":/worker -w /worker iron/scala scala -cp gson-2.2.4.jar:json-java.jar:ironworker.jar:. Worker101 
 ```
 
 Now that we have it working, let's package it up:
