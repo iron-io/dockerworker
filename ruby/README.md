@@ -24,6 +24,48 @@ docker run --rm -it -e "PAYLOAD_FILE=hello.payload.json" -v "$PWD":/worker -w /w
 
 Boom, it works! And now that it works, we know it will work on IronWorker.
 
+Let's package it up inside a Docker image and upload it to a Docker Registry. Copy the [Dockerfile](https://github.com/iron-io/dockerworker/blob/master/ruby/Dockerfile) from this repository
+and modify the ENTRYPOINT line to run your script, but for this example, it's all ready to go:
+
+```sh
+docker build -t username/hello.rb:0.0.1 .
+```
+
+That's just a standard `docker build` command. The 0.0.1 is the version which you can update
+whenever you make changes to your code.
+
+Test your image:
+
+```sh
+docker run --rm -it -e "PAYLOAD_FILE=hello.payload.json" username/hello.rb:0.0.1
+```
+
+Push it to Docker Hub:
+
+```sh
+docker push username/hello.rb
+```
+
+Ok, we're ready to run this on Iron now! But first we have to let Iron know about our
+image.
+
+```sh
+iron worker register username/hello.rb:0.0.1
+```
+
+Now queue up a job (or 1 million jobs)!
+
+```sh
+iron worker queue --payload-file hello.payload.json --wait username/hello.rb
+```
+
+The `--wait` parameter waits for the job to finish, then prints the output.
+You will also see a link to [HUD](http://hud.iron.io) where you can see all the rest of the task details along with the log output.
+
+## If you don't want to package your code using Docker
+
+You can package and send your code to Iron directly with the instructions below.
+
 Let's package it up:
 
 ```sh
@@ -44,30 +86,3 @@ iron worker queue --payload-file hello.payload.json --wait hello
 
 The `--wait` parameter waits for the job to finish, then prints the output.
 You will also see a link to [HUD](http://hud.iron.io) where you can see all the rest of the task details along with the log output.
-
-<!--
-## Bundling the worker inside a Docker image
-
-Follow the same steps above to run/test your worker. But instead of zipping it up, do the following:
-
-Package it up inside an image and send it off to Docker HUB, see the `Dockerfile` for reference:
-
-```sh
-docker build -t treeder/hello.rb:latest .
-```
-
-Test your image:
-
-```sh
-docker run --rm -it -e "PAYLOAD_FILE=hello.payload.json" treeder/hello.rb
-```
-
-Now queue up a job for it!
-
-```sh
-iron worker queue --payload-file hello.payload.json --wait treeder/hello.rb
-```
-
-The `--wait` parameter waits for the job to finish, then prints the output.
-You will also see a link to [HUD](http://hud.iron.io) where you can see all the rest of the task details along with the log output.
--->
