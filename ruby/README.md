@@ -62,6 +62,17 @@ iron worker queue --payload-file hello.payload.json --wait username/hello.rb
 The `--wait` parameter waits for the job to finish, then prints the output.
 You will also see a link to [HUD](http://hud.iron.io) where you can see all the rest of the task details along with the log output.
 
+## Private images
+
+If you want to keep your code private and use a [private Docker repository](https://docs.docker.com/docker-hub/repos/#private-repositories), you just need
+to let Iron know it's private.
+
+```sh
+iron docker login -e YOUR_DOCKER_HUB_EMAIL -p YOUR_DOCKER_HUB_PASSWORD
+```
+
+Then just do everything the same as above.
+
 ## If you don't want to package your code using Docker
 
 You can package and send your code to Iron directly with the instructions below.
