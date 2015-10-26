@@ -24,6 +24,9 @@ Now test it locally:
 docker run --rm -it -e "PAYLOAD_FILE=hello.payload.json" -v "$PWD":/worker -w /worker iron/ruby ruby hello.rb
 ```
 
+The PAYLOAD_FILE environment variable is passed in to your worker automatically and tells you
+where the payload file is. Our [client libraries](http://dev.iron.io/worker/libraries/) help you load the special environment variables automatically.
+
 Boom, it works! And now that it works, we know it will work on IronWorker.
 
 ### 3. Package your code
