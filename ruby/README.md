@@ -64,9 +64,10 @@ image you just pushed to Docker Hub:
 iron worker register username/hello.rb:0.0.1
 ```
 
-### 5. Now you can start queuing jobs or schedule recurring runs for your image
+### 5. Queue / Schedule jobs for your image
 
-Now queue up a job (or 1 million jobs)!
+Now you can start queuing jobs or schedule recurring jobs for your image. Let's quickly
+queue up a job to try it out.
 
 ```sh
 iron worker queue --payload-file hello.payload.json --wait username/hello.rb
@@ -92,6 +93,9 @@ Then just do everything the same as above.
 ## If you don't want to package your code using Docker
 
 You can package and send your code to Iron directly with the instructions below.
+Start with steps 1 and 2 above, then continue at step 3 here.
+
+### 3. Package your code
 
 Let's package it up:
 
@@ -99,13 +103,18 @@ Let's package it up:
 zip -r hello.zip .
 ```
 
+### 4. Upload your code
+
 Then upload it:
 
 ```sh
 iron worker upload --name hello --zip hello.zip iron/ruby ruby hello.rb
 ```
 
-And finally queue up a job for it!
+### 5. Queue / Schedule jobs for your worker
+
+Now you can start queuing jobs or schedule recurring jobs for your worker. Let's quickly
+queue up a job to try it out.
 
 ```sh
 iron worker queue --payload-file hello.payload.json --wait hello
