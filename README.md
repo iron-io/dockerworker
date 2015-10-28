@@ -6,9 +6,9 @@ Docker Worker
 Use the Iron.io Docker stacks to locally dev and test your IronWorker workers in the exact same environment it will
 have when running remotely on the IronWorker cloud.
 
-## The New Dev/Test Workflow
+## The New Workflow
 
-The new dev/test workflow is much simpler and quicker. The general workflow is the following:
+The new workflow is much simpler and quicker. The general workflow is the following:
 
 1. Create your worker. All dependencies must in the current directory or in sub-directories.
 2. Create an input/payload example file (check this into source control as an example)
