@@ -58,10 +58,10 @@ docker push username/hello.rb
 ### 4. Register your image with Iron
 
 Ok, we're ready to run this on Iron now, but first we have to let Iron know about the
-image you just pushed to Docker Hub:
+image you just pushed to Docker Hub. Also, you can optionally register environment variables here that will be passed into your container at runtime. 
 
 ```sh
-iron worker register username/hello.rb:0.0.1
+iron worker register -e "NAME=JOHNNY" username/hello.rb:0.0.1
 ```
 
 ### 5. Queue / Schedule jobs for your image
