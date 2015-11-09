@@ -35,7 +35,7 @@ Let's package it up inside a Docker image and upload it to a Docker Registry. Co
 and modify the ENTRYPOINT line to run your script, but for this example, it's all ready to go:
 
 ```sh
-docker build -t username/hello.rb:0.0.1 .
+docker build -t username/hello:0.0.1 .
 ```
 
 That's just a standard `docker build` command. The 0.0.1 is the version which you can update
@@ -44,7 +44,7 @@ whenever you make changes to your code.
 Test your image, just to be sure you created it correctly:
 
 ```sh
-docker run --rm -it -e "PAYLOAD_FILE=hello.payload.json" username/hello.rb:0.0.1
+docker run --rm -it -e "PAYLOAD_FILE=hello.payload.json" username/hello:0.0.1
 ```
 
 ### 4. Push it to Docker Hub
@@ -52,7 +52,7 @@ docker run --rm -it -e "PAYLOAD_FILE=hello.payload.json" username/hello.rb:0.0.1
 Push it to Docker Hub:
 
 ```sh
-docker push username/hello.rb
+docker push username/hello
 ```
 
 ### 4. Register your image with Iron
@@ -61,7 +61,7 @@ Ok, we're ready to run this on Iron now, but first we have to let Iron know abou
 image you just pushed to Docker Hub. Also, you can optionally register environment variables here that will be passed into your container at runtime. 
 
 ```sh
-iron register -e "NAME=JOHNNY" username/hello.rb:0.0.1
+iron worker register -e "NAME=JOHNNY" username/hello:0.0.1
 ```
 
 ### 5. Queue / Schedule jobs for your image
@@ -70,7 +70,7 @@ Now you can start queuing jobs or schedule recurring jobs for your image. Let's 
 queue up a job to try it out.
 
 ```sh
-iron worker queue --payload-file hello.payload.json --wait username/hello.rb
+iron worker queue --payload-file hello.payload.json --wait username/hello
 ```
 
 The `--wait` parameter waits for the job to finish, then prints the output.
