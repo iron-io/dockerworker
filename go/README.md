@@ -7,20 +7,20 @@ This example will show you how to test and deploy Go (Golang) code to IronWorker
 Vendor dependencies:
 
 ```sh
-docker run --rm -it -v "$PWD":/go/src/x/y/z -w /go/src/x/y/z -e "GOPATH=/go/src/x/y/z/vendor:/go" iron/go go get
+docker run --rm -it -v "$PWD":/go/src/x/y/z -w /go/src/x/y/z -e "GOPATH=/go/src/x/y/z/vendor:/go" iron/go:dev go get
 ```
 
 And build it:
 
 
 ```sh
-docker run --rm -it -v "$PWD":/go/src/x/y/z -w /go/src/x/y/z -e "GOPATH=/go/src/x/y/z/vendor:/go" iron/go go build -o hello
+docker run --rm -it -v "$PWD":/go/src/x/y/z -w /go/src/x/y/z -e "GOPATH=/go/src/x/y/z/vendor:/go" iron/go:dev go build -o hello
 ```
 
 Run it:
 
 ```sh
-docker run --rm -it -e "PAYLOAD_FILE=hello.payload.json" -v "$PWD":/app -w /app  iron/base ./hello
+docker run --rm -it -e "PAYLOAD_FILE=hello.payload.json" -v "$PWD":/app -w /app  iron/go ./hello
 ```
 
 And now it works, so let's package it up:
@@ -32,7 +32,7 @@ zip -r hello-go.zip .
 And upload it:
 
 ```sh
-iron worker upload --name hello-go --zip hello-go.zip iron/base ./hello
+iron worker upload --name hello-go --zip hello-go.zip iron/go ./hello
 ```
 
 Now queue up a task (or 1 million):
