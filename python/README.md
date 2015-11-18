@@ -5,11 +5,10 @@ remotely on IronWorker.
 
 **Note**: Be sure you've followed the base [getting started instructions on the top level README](https://github.com/iron-io/dockerworker).
 
-If you want to use Python 3, change the image name in the commands below to iron/python:3
+If you want to use **Python 3**, change the image name in the commands below to iron/python:3
 and use the `python3` interpreter.
 
-Let's install our modules into this folder using `pip install -t packages -r requirements.txt` and we're doing it
-inside Docker in case there are some native extensions.
+Install the dependencies:
 
 ```sh
 docker run --rm -v "$PWD":/worker -w /worker iron/python:2-dev pip install -t packages -r requirements.txt

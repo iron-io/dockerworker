@@ -17,7 +17,7 @@ And build it:
 docker run --rm -it -v "$PWD":/go/src/x/y/z -w /go/src/x/y/z -e "GOPATH=/go/src/x/y/z/vendor:/go" iron/go:dev go build -o hello
 ```
 
-Run it:
+Test it:
 
 ```sh
 docker run --rm -it -e "PAYLOAD_FILE=hello.payload.json" -v "$PWD":/app -w /app  iron/go ./hello

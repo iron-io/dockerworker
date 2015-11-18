@@ -5,12 +5,10 @@ remotely on IronWorker.
 
 **Note**: Be sure you've followed the base [getting started instructions on the top level README](https://github.com/iron-io/dockerworker).
 
-**Note**: You'll need PHP installed on your machine to use this example (And [composer](https://getcomposer.org/) for dependencies).
-
 Install the dependencies:
 
 ```sh
-docker run --rm -v "$PWD":/worker -w /worker iron/php-composer composer install
+docker run --rm -v "$PWD":/worker -w /worker iron/php:dev composer install
 ```
 
 Now run it:
