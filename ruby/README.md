@@ -10,11 +10,7 @@ This example will show you how to test and deploy Ruby code to IronWorker.
 docker run --rm -v "$PWD":/worker -w /worker iron/ruby:dev bundle install --standalone --clean
 ```
 
-If you're using Nokogiri, use this one:
-
-```sh
-docker run --rm -v "$PWD":/worker -w /worker iron/ruby:dev sh -c 'bundle config --local build.nokogiri --use-system-libraries && bundle install --standalone --clean'
-```
+If you have issues during the above build/bundle stage, see [Ruby Troubleshooting](https://github.com/iron-io/dockerworker/wiki/Ruby-Troubleshooting).
 
 Then require the vendored gems. Notice in `hello.rb`, we add the following so it uses the vendored gems:
 
