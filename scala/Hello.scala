@@ -14,7 +14,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import io.iron.ironworker.client.helpers.WorkerHelper
 
-object Worker101 {
+object Hello {
 
     /**
      * @param args the command line arguments
