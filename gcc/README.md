@@ -95,36 +95,3 @@ iron docker login -e YOUR_DOCKER_HUB_EMAIL -u YOUR_DOCKER_HUB_USERNAME -p YOUR_D
 ```
 
 Then just do everything the same as above.
-
-## If you don't want to package your code using Docker
-
-You can package and send your code to Iron directly with the instructions below.
-Start with steps 1 and 2 above, then continue at step 3 here.
-
-### 3. Package your code
-
-Let's package it up:
-
-```sh
-zip -r hello.zip .
-```
-
-### 4. Upload your code
-
-Then upload it:
-
-```sh
-iron worker upload --name hellojs --zip hello.zip iron/node node hello.js
-```
-
-### 5. Queue / Schedule jobs for your worker
-
-Now you can start queuing jobs or schedule recurring jobs for your worker. Let's quickly
-queue up a job to try it out.
-
-```sh
-iron worker queue --payload-file hello.payload.json --wait hellojs
-```
-
-The `--wait` parameter waits for the job to finish, then prints the output.
-You will also see a link to [HUD](http://hud.iron.io) where you can see all the rest of the task details along with the log output.
