@@ -83,6 +83,20 @@ You will also see a link to [HUD](http://hud.iron.io) where you can see all the 
 Read the API docs to see how to queue jobs from your code or how to schedule them:
 http://dev.iron.io/worker/reference/api/
 
+Of course, in practice you'll be
+[queuing up jobs via the API](http://dev.iron.io/worker/reference/api/#queue_a_task),
+most likely using one of our
+[client libraries](http://dev.iron.io/worker/libraries/).
+Here's a curl example to show how easy it is to do in any language:
+
+```sh
+curl -H "Content-Type: application/json" -H "Authorization: OAuth $IRON_TOKEN" \
+ -d '{"tasks":[{"code_name":"USERNAME/hello","payload":"{\"name\":\"Travis\"}"}]}' \
+ "http://worker-aws-us-east-1.iron.io/2/projects/$IRON_PROJECT_ID/tasks"
+```
+
+Just copy the above, change `USERNAME` to your Docker Hub username and paste it into a terminal
+to queue up a task.
 ## Private images
 
 If you want to keep your code private and use a [private Docker repository](https://docs.docker.com/docker-hub/repos/#private-repositories), you just need
