@@ -1,9 +1,5 @@
 set -e
 
-dj() {
-  docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/app -v "$HOME":/root -w /app devo/dj $@
-}
-
 echo "ruby"
 cd ruby
 dj ruby vendor
