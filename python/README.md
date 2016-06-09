@@ -140,3 +140,17 @@ iron worker queue --payload-file hello.payload.json --wait hellopy
 
 The `--wait` parameter waits for the job to finish, then prints the output.
 You will also see a link to [HUD](http://hud.iron.io) where you can see all the rest of the task details along with the log output.
+
+
+### Troubleshooting
+When using Docker on OS X, if you update the requirements.txt file, you may get an error similar to
+```sh
+TypeError: must be encoded string without NULL bytes, not str
+You are using pip version 8.0.2, however version 8.1.2 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command 
+```
+
+The problem happens when the requirements.txt is modified at the OS X system layer and the changes are not propagated to the Virtualbox running Docker. Running the following command within the Virtualbox Core Linux host will force the changes to sync
+```sh
+echo 3 > /proc/sys/vm/drop_caches
+```
