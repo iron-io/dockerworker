@@ -1,22 +1,27 @@
-## Quick Example for a Java Worker (3 minutes)
-
-This example will show you how to build your Java IronWorker, test it locally, then upload it
-to IronWorker for production.
+## Quick Example for a C/C++ Worker
 
 **Note**: Be sure you've followed the base [getting started instructions on the top level README](https://github.com/iron-io/dockerworker).
 
-### 1. Build including the dependencies:
+### 1. Install the dependencies:
+
+TODO:
 
 ```sh
-docker run --rm -v "$PWD":/worker -w /worker iron/java:dev javac -cp "json-java.jar:gson-2.2.4.jar:ironworker-1.0.10.jar" Hello.java PayloadData.java
+docker run --rm -v "$PWD":/worker -w /worker iron/node:dev npm install
+```
+
+### 2. Build it
+
+```sh
+docker run --rm -e "PAYLOAD_FILE=hello.payload.json" -e "YOUR_ENV_VAR=ANYTHING" -v "$PWD":/worker -w /worker iron/gcc:dev g++ hello.C -o hello
 ```
 
 ### 2. Test locally
 
-Now run it to test it out:
+Now test it locally:
 
 ```sh
-docker run --rm  -e "PAYLOAD_FILE=hello.payload.json" -e "YOUR_ENV_VAR=ANYTHING" -v "$PWD":/worker -w /worker iron/java java -cp gson-2.2.4.jar:json-java.jar:ironworker-1.0.10.jar:. Hello
+docker run --rm -it -e "PAYLOAD_FILE=hello.payload.json" -e "YOUR_ENV_VAR=ANYTHING" -v "$PWD":/app -w /app  iron/gcc ./hello
 ```
 
 The PAYLOAD_FILE environment variable is passed in to your worker automatically and tells you
@@ -25,11 +30,11 @@ where the payload file is. Our [client libraries](http://dev.iron.io/worker/libr
 The YOUR_ENV_VAR environment variable is your custom environment variable. There can
 be any number of custom environment variables and they can be anything.
 
-Now that it works, we know it will work on IronWorker.
+It works! And now that it works, we know it will work on IronWorker.
 
 ### 3. Package your code
 
-Let's package it up inside a Docker image and upload it to a Docker Registry. Copy the [Dockerfile](https://github.com/iron-io/dockerworker/blob/master/java/Dockerfile) from this repository
+Let's package it up inside a Docker image and upload it to a Docker Registry. Copy the [Dockerfile](https://github.com/iron-io/dockerworker/blob/master/node/Dockerfile) from this repository
 and modify the ENTRYPOINT line to run your script, but for this example, it's all ready to go:
 
 ```sh
@@ -94,7 +99,6 @@ curl -H "Content-Type: application/json" -H "Authorization: OAuth $IRON_TOKEN" \
 
 Just copy the above, change `USERNAME` to your Docker Hub username and paste it into a terminal
 to queue up a task.
-
 ## Private images
 
 If you want to keep your code private and use a [private Docker repository](https://docs.docker.com/docker-hub/repos/#private-repositories), you just need
@@ -105,39 +109,3 @@ iron docker login -e YOUR_DOCKER_HUB_EMAIL -u YOUR_DOCKER_HUB_USERNAME -p YOUR_D
 ```
 
 Then just do everything the same as above.
-
-## If you don't want to package your code using Docker
-
-You can package and send your code to Iron directly with the instructions below.
-Start with steps 1 and 2 above, then continue at step 3 here.
-
-### 3. Package your code
-
-```sh
-zip -r hello-java.zip .
-```
-
-### 4. Upload your code
-
-Then upload it:
-
-```sh
-iron worker upload --name hello-java --zip hello-java.zip iron/java java -cp gson-2.2.4.jar:json-java.jar:ironworker.jar:. Hello
-```
-
-### 5. Queue / Schedule jobs for your worker
-
-Now you can start queuing jobs or schedule recurring jobs for your worker. Let's quickly
-queue up a job to try it out.
-
-```sh
-iron worker queue -payload-file hello.payload.json --wait hello-java
-```
-
-The `--wait` parameter waits for the job to finish, then prints the output.
-You will also see a link to [HUD](http://hud.iron.io) where you can see all the rest of the task details along with the log output.
-
-## Notes
-
-1. We provide Docker images for Java 1.7 as well. They are `iron/java:1.7` and `iron/java:1.7-dev`
-2. The `iron/java` images contain _only_ the JRE - they cannot be used to compile Java code. Use `iron/java:dev` images for that.

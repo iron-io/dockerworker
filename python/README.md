@@ -83,6 +83,20 @@ You will also see a link to [HUD](http://hud.iron.io) where you can see all the 
 Read the API docs to see how to queue jobs from your code or how to schedule them:
 http://dev.iron.io/worker/reference/api/
 
+Of course, in practice you'll be
+[queuing up jobs via the API](http://dev.iron.io/worker/reference/api/#queue_a_task),
+most likely using one of our
+[client libraries](http://dev.iron.io/worker/libraries/).
+Here's a curl example to show how easy it is to do in any language:
+
+```sh
+curl -H "Content-Type: application/json" -H "Authorization: OAuth $IRON_TOKEN" \
+ -d '{"tasks":[{"code_name":"USERNAME/hello","payload":"{\"name\":\"Travis\"}"}]}' \
+ "http://worker-aws-us-east-1.iron.io/2/projects/$IRON_PROJECT_ID/tasks"
+```
+
+Just copy the above, change `USERNAME` to your Docker Hub username and paste it into a terminal
+to queue up a task.
 ## Private images
 
 If you want to keep your code private and use a [private Docker repository](https://docs.docker.com/docker-hub/repos/#private-repositories), you just need
@@ -126,3 +140,17 @@ iron worker queue --payload-file hello.payload.json --wait hellopy
 
 The `--wait` parameter waits for the job to finish, then prints the output.
 You will also see a link to [HUD](http://hud.iron.io) where you can see all the rest of the task details along with the log output.
+
+
+### Troubleshooting
+When using Docker on OS X, if you update the requirements.txt file, you may get an error similar to
+```sh
+TypeError: must be encoded string without NULL bytes, not str
+You are using pip version 8.0.2, however version 8.1.2 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command 
+```
+
+The problem happens when the requirements.txt is modified at the OS X system layer and the changes are not propagated to the Virtualbox running Docker. Running the following command within the Virtualbox Core Linux host will force the changes to sync
+```sh
+echo 3 > /proc/sys/vm/drop_caches
+```
