@@ -6,10 +6,6 @@
 
 TODO:
 
-```sh
-docker run --rm -v "$PWD":/worker -w /worker iron/node:dev npm install
-```
-
 ### 2. Build it
 
 ```sh
