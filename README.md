@@ -29,7 +29,7 @@ This should print information about your Docker installation. If it doesn't, you
 2\. You'll want to install the new [Iron cli](https://github.com/iron-io/ironcli) tool as well (not totally necessary, but makes things a lot easier):
 
 ```sh
-curl -sSL http://get.iron.io/cli | sh
+curl -sSL https://cli.iron.io/install | sh
 ```
 
 Or if you'd prefer to download it yourself, you can grab the latest release from here: https://github.com/iron-io/ironcli/releases
