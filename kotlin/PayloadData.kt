@@ -7,6 +7,4 @@ class PayloadData {
     @SerializedName("name")
     var name: String = ""
 
-
-
 }
