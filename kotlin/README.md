@@ -8,7 +8,7 @@ to IronWorker for production.
 ### 1. Build including the dependencies:
 
 ```sh
-docker run --rm -v "$PWD":/worker -w /worker iron/kotlin kotlinc -cp "json-java.jar:gson-2.2.4.jar:ironworker-1.0.10.jar" Hello.kt PayloadData.kt
+docker run --rm -v "$PWD":/worker -w /worker iron/kotlin:dev kotlinc -cp "json-java.jar:gson-2.2.4.jar:ironworker-1.0.10.jar" Hello.kt PayloadData.kt
 ```
 
 ### 2. Test locally
@@ -16,7 +16,7 @@ docker run --rm -v "$PWD":/worker -w /worker iron/kotlin kotlinc -cp "json-java.
 Now run it to test it out:
 
 ```sh
-docker run -e PAYLOAD_FILE=hello.payload.json --rm -v "$PWD":/worker -w /worker iron/kotlin kotlin -cp gson-2.2.4.jar:json-java.jar:ironworker-1.0.10.jar:. Hello
+docker run -e PAYLOAD_FILE=hello.payload.json --rm -v "$PWD":/worker -w /worker iron/java:1.8 java -cp gson-2.2.4.jar:json-java.jar:ironworker-1.0.10.jar:kotlin-runtime-1.0.5.jar:. Hello
 ```
 
 The PAYLOAD_FILE environment variable is passed in to your worker automatically and tells you

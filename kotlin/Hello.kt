@@ -23,9 +23,6 @@ object Hello {
         println("Running worker")
 
         val helper = WorkerHelper.fromArgs(arrayOfNulls<String>(0))
-        val `in` = BufferedReader(
-                InputStreamReader(System.`in`))
-        val buff = StringBuffer()
 
         // Get payload data with the IronWorker helper
         val payload = helper.getPayload(PayloadData::class.java)
